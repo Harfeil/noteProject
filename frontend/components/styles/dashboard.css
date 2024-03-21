@@ -1,0 +1,255 @@
+body {
+  background-color: #252323;
+}
+.dashboardContainer {
+  display: flex;
+  flex-direction: row;
+  max-height: 900px;
+}
+.sidebar {
+  width: 15%;
+  background-color: #e9ecef;
+  height: 98vh;
+  font-weight: bold;
+}
+.logo {
+  font-size: 20px;
+  text-align: center;
+}
+.allNotes,
+#addNtsLbl {
+  color: white;
+}
+#spanLogo {
+  color: #bc3908;
+}
+.dashboardContent {
+  width: 85%;
+  padding-left: 10px;
+}
+.topBar {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+}
+.listContainer ul li {
+  list-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 20px;
+}
+#noteImage {
+  height: 20px;
+  width: 20px;
+}
+.line {
+  margin-top: -20px;
+  width: 80%;
+  border-top: 3px solid #40b5ad;
+}
+#searchNotes {
+  margin-top: 15px;
+  height: 35px;
+  width: 300px;
+  border-radius: 20px;
+  border: 1px solid gray;
+  background-color: lightgray;
+}
+.searchNav {
+  padding-left: 45%;
+}
+#addNotesBtn {
+  height: 40px;
+  border-radius: 50px;
+  width: 40px;
+  border: 1px solid gray;
+  background-color: #fff;
+  border: 1px solid white;
+}
+.addBtn {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+#notesName {
+  width: 400px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
+.messageCont {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 318px;
+  background-color: lightgray;
+  color: #333;
+  padding: 20px;
+  margin: 20px 0;
+  outline: none;
+  border-radius: 5px;
+  cursor: default;
+  overflow-y: auto;
+}
+.popup-form {
+  max-height: 1000px;
+  width: 540px;
+  overflow-y: auto;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  transition: transform 4s ease;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(189, 8, 8, 0.2);
+  z-index: 9999;
+  transform-origin: right;
+}
+#addBtn,
+#cnlBtn {
+  height: 35px;
+  width: 200px;
+  background-color: skyblue;
+  border: 1px solid white;
+  color: white;
+}
+#cnlBtn {
+  background-color: red;
+}
+.addedNoteContainer {
+  max-height: 780px;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 440px));
+  overflow-y: auto;
+}
+.newNote {
+  margin-left: 50px;
+  height: 401px;
+  width: 400px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  margin-top: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
+  background-color: #fff;
+}
+.noteName {
+  padding-left: 20px;
+}
+#noteMessage {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 150px;
+}
+.messageContainer {
+  max-height: 200px;
+  overflow: hidden;
+}
+.imgCont {
+  margin-top: -45px;
+  margin-left: 350px;
+}
+.menu-list {
+  display: none;
+  background-color: #ffe5d9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  cursor: default;
+  z-index: 9999;
+  position: fixed;
+}
+.menu-list:hover {
+  cursor: default;
+}
+#themeBtn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  border: 1px solid gray;
+  margin-left: 20px;
+  margin-top: 130px;
+}
+.dateContainer {
+  margin-top: -40px;
+  margin-left: 300px;
+  display: block;
+}
+.themePick,
+.greenTheme,
+.redTheme,
+.yellowTheme,
+.blueTheme,
+.defaultTheme {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  border: 1px solid black;
+}
+.themePick {
+  transform: translateY(-30px);
+}
+.greenTheme,
+.redTheme,
+.yellowTheme,
+.blueTheme,
+.defaultTheme {
+  margin-right: 20px;
+  border: 1px solid white;
+}
+.chooseTheme {
+  margin-left: -100px;
+}
+.themeContainer {
+  margin-left: 493px;
+  z-index: 9999;
+  position: fixed;
+}
+.themeColorContainer {
+  margin-top: -60px;
+  position: fixed;
+  margin-left: 235px;
+  display: none;
+}
+.greenTheme,
+#greenOutTheme {
+  background-color: green;
+}
+.redTheme,
+#redOutTheme {
+  background-color: red;
+}
+.yellowTheme,
+#yellowOutTheme {
+  background-color: yellow;
+}
+.blueTheme,
+#blueOutTheme {
+  background-color: blue;
+}
+.heartContainer {
+  display: block;
+}
+.trashContainer {
+  margin-left: 115px;
+  display: block;
+}
+.buttonContainers {
+  margin-top: -20px;
+}
+.themeOut {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  border: 1px solid gray;
+}
+.themeColorBtnOut {
+  display: none;
+  margin-top: -120px;
+  margin-left: 20px;
+}

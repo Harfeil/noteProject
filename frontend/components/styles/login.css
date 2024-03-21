@@ -1,0 +1,38 @@
+#loginTitle {
+  font-size: 50px;
+}
+.loginContainer {
+  max-width: 400px;
+  position: relative;
+  left: 600;
+  top: 70;
+}
+.loginTitle {
+  text-align: center;
+}
+.nameText,
+.passwordText {
+  height: 45px;
+  width: 400px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
+.forgotPass {
+  padding-left: 180px;
+}
+.signInBtn {
+  margin-top: 80px;
+  height: 46px;
+  width: 400px;
+  background-color: #40b5ad;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid white;
+}
+.formContainer label {
+  color: gray;
+}
+.active {
+  color: blue;
+  text-decoration: underline;
+}
