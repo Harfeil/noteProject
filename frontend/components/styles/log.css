@@ -1,3 +1,11 @@
+body {
+  background: linear-gradient(
+    90deg,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
 #loginTitle {
   font-size: 50px;
 }
@@ -6,6 +14,8 @@
   position: relative;
   left: 600;
   top: 70;
+  background-color: white;
+  padding: 50px;
 }
 .loginTitle {
   text-align: center;
@@ -18,7 +28,7 @@
   border: 1px solid lightgray;
 }
 .forgotPass {
-  padding-left: 180px;
+  padding-left: 150px;
 }
 .signInBtn {
   margin-top: 80px;
@@ -30,7 +40,8 @@
   border: 1px solid white;
 }
 .formContainer label {
-  color: gray;
+  color: black;
+  font-size: 20px;
 }
 .active {
   color: blue;

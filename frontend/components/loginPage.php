@@ -4,7 +4,7 @@
     include "templates/header.php";
 
 ?>
-<link rel="stylesheet" href="styles/login.css">
+<link rel="stylesheet" href="styles/log.css">
 
 <div class = "loginContainer">
     <div class = "loginTitle">
@@ -25,18 +25,18 @@
 </div>
 
 
-<script>
+    <script>
 
-    let headings = document.querySelectorAll("#links");
+        let headings = document.querySelectorAll("#links");
 
-    headings.forEach(function(heading) {
-        heading.addEventListener("click", function() {
-            headings.forEach(function(h) {
-                h.classList.remove("active");
+        headings.forEach(function(heading) {
+            heading.addEventListener("click", function() {
+                headings.forEach(function(h) {
+                    h.classList.remove("active");
+                });
+                this.classList.add("active");
             });
-            this.classList.add("active");
         });
-    });
 
     </script>
 </body>

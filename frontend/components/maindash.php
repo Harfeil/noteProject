@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/mainDash.css">
     <title>Document</title>
 </head>
 <body>
@@ -100,21 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="notesFormContainer" id = "notesFormContainer">
 
                   <h2 id="titleForm">Add Notes</h2><br>
-
-                  <div class = "themeColorContainer" id = "themeColorContainer">
-                      <button id = "greenTheme" class = "greenTheme" onclick = "changeColor('green', 'dark')"></button>
-                      <button id = "defaultTheme" class = "defaultTheme" onclick = "changeColor('white', 'light')"></button>
-                      <button id = "redTheme" class = "redTheme" onclick = "changeColor('red', 'dark')"></button>
-                      <button id = "yellowTheme" class = "yellowTheme" onclick = "changeColor('yellow', 'light')"></button>
-                      <button id = "blueTheme" class = "blueTheme" onclick = "changeColor('blue', 'dark')"></button>
-                    </div>
-                    <div class = "themeContainer">
-                      <div class="chooseTheme">
-                        <label for="" id = "chooseThemeLbl">Choose Theme</label>
-                      </div>
-                      <button class = "themePick" id = "themePick" value = "white"></button>
-                    </div>
-
                     <form action="" method="post" id="notesForm">
 
                         <label for="" id = "notesNameLbl">Notes Name:</label><br><br>
@@ -180,14 +165,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <p data-noteId = '$row[note_id]' data-name = '$row[note_name]' data-color = '$row[note_color]' data-message = '$row[note_message]' data-date = '$row[note_date]' onclick = 'editNotes()' class='editBtn' id = 'noteMessage'>$row[note_message]</p>
                         </div>
                         <div class = 'buttonContainers'>
-                          <button id = 'themeBtn' class = 'themeBtn' style= 'background-color: $row[note_color];'></button>
-                          <div class = heartContainer style = '
-                            margin-top: $marginTop; margin-left: $marginLeft;'>
-                            <img onclick = 'favToggle($row[note_id])' data-noteId = '$row[note_id]' class='favNote' id='favNote' width= $width height=$height src=$path alt = $alt> 
-                          </div>
-                          <div class = 'trashContainer' style = 'margin-top: $trashMarginTop;'>
-                            <img class='dotsImg' width='50' height='45'src='images/trash.PNG'>
-                          </div>
                           <div class = 'dateContainer'>
                             <h5>$row[note_date]</h5>
                           </div>
@@ -208,29 +185,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      
     const searchInput = document.getElementById('searchName');
     const searchResults = document.getElementById('searchResults');
-
-   
-
-    function changeColor(color, mode){
-
-      container.style.backgroundColor = color;
-      themePick.style.backgroundColor = color;
-      themePick.value = color;
-      if(mode === "dark"){
-        titleForm.style.color = "White";
-        notesNameLbl.style.color = "White";
-        chooseThemeLbl.style.color = "White";
-      }else if(mode === "light"){
-        titleForm.style.color = "black";
-        notesNameLbl.style.color = "black";
-        chooseThemeLbl.style.color = "black";
-      }
-      if(color.includes("red")){
-        cnlBtn.style.backgroundColor = "black";
-      }else{
-        cnlBtn.style.backgroundColor = "red";
-      }
-    }
 
     function favToggle(id){
 
