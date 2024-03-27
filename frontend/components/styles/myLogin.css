@@ -16,6 +16,7 @@ body {
   top: 70;
   background-color: white;
   padding: 50px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 .loginTitle {
   text-align: center;
@@ -46,4 +47,14 @@ body {
 .active {
   color: blue;
   text-decoration: underline;
+}
+#passwordError,
+#emailError,
+#messageError,
+#checkError {
+  font-size: 15px;
+  color: red;
+}
+#checkbox {
+  border: 1px solid red;
 }
