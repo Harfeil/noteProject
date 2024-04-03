@@ -71,28 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="" id = "passwordError"><?php echo $passwordError ?></label><br>
             <input id = "checkbox" type="checkbox" name = "checkme">
             <label for="">Sign Me In</label>
-            <a class = "forgotPass" href="">Forgot Password?</a><br>
+            <a class = "forgotPass" href="forgot_password.php">Forgot Password?</a><br>
             <label for="" id = "checkError"><?php echo $checkError ?></label>
             <button class = "signInBtn">SIGN IN</button>
             <label for="" id = "passwordError"><?php echo $messageError ?></label>
         </form>
     </div>
 </div>
-
-
-    <script>
-
-        let headings = document.querySelectorAll("#links");
-
-        headings.forEach(function(heading) {
-            heading.addEventListener("click", function() {
-                headings.forEach(function(h) {
-                    h.classList.remove("active");
-                });
-                this.classList.add("active");
-            });
-        });
-
-    </script>
 </body>
 </html>

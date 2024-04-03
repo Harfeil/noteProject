@@ -3,56 +3,56 @@ require_once('db_connector.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $operation = $_POST["operation"];
+    // $operation = $_POST["operation"];
 
-    if($operation === "Edit"){
-      if (isset($_POST['name']) && isset($_POST['message']) && isset($_POST['color']) && isset($_POST['id'])) {
+    // if($operation === "Edit"){
+    //   if (isset($_POST['name']) && isset($_POST['message']) && isset($_POST['color']) && isset($_POST['id'])) {
             
-        $name = $_POST['name'];
-        $message = $_POST['message'];
-        $color = $_POST['color'];
-        $currentDate = date("Y-m-d");
-        $status = "New";
-        $id = $_POST['id'];
+    //     $name = $_POST['name'];
+    //     $message = $_POST['message'];
+    //     $color = $_POST['color'];
+    //     $currentDate = date("Y-m-d");
+    //     $status = "New";
+    //     $id = $_POST['id'];
 
-        $sql = "UPDATE note_tbl SET note_name = '$name',note_message = '$message', note_color = '$color', note_date = '$currentDate', note_status = '$status' WHERE note_id = '$id'";
+    //     $sql = "UPDATE note_tbl SET note_name = '$name',note_message = '$message', note_color = '$color', note_date = '$currentDate', note_status = '$status' WHERE note_id = '$id'";
 
-          if ($connection->query($sql) === TRUE) {
-          } else {
-            $connection->error;
-          }
-        } 
-    }
+    //       if ($connection->query($sql) === TRUE) {
+    //       } else {
+    //         $connection->error;
+    //       }
+    //     } 
+    // }
 
-    if($operation === "Add"){
-      if (isset($_POST['name']) && isset($_POST['message']) && isset($_POST['color'])) {
+    // if($operation === "Add"){
+    //   if (isset($_POST['name']) && isset($_POST['message']) && isset($_POST['color'])) {
       
-        $name = $_POST['name'];
-        $message = $_POST['message'];
-        $color = $_POST['color'];
-        $currentDate = date("Y-m-d");
-        $status = "New";
+    //     $name = $_POST['name'];
+    //     $message = $_POST['message'];
+    //     $color = $_POST['color'];
+    //     $currentDate = date("Y-m-d");
+    //     $status = "New";
 
-        $sql = "INSERT INTO note_tbl (note_name, note_date, note_message, note_color, note_status) VALUES ('$name' , '$currentDate','$message', '$color ', '$status')";
-        $result = $connection->query($sql);
-        $connection->close();
-      } 
-    }
+    //     $sql = "INSERT INTO note_tbl (note_name, note_date, note_message, note_color, note_status) VALUES ('$name' , '$currentDate','$message', '$color ', '$status')";
+    //     $result = $connection->query($sql);
+    //     $connection->close();
+    //   } 
+    // }
     
 
 
-    if (isset($_POST['noteIdStat']) && isset($_POST['status'])) {
+    // if (isset($_POST['noteIdStat']) && isset($_POST['status'])) {
       
-      $id = $_POST['noteIdStat'];
-      $status = $_POST['status'];
+    //   $id = $_POST['noteIdStat'];
+    //   $status = $_POST['status'];
 
-       $sql = "UPDATE note_tbl SET note_status = '$status' WHERE note_id = '$id'";
+    //    $sql = "UPDATE note_tbl SET note_status = '$status' WHERE note_id = '$id'";
 
-        if ($connection->query($sql) === TRUE) {
-        } else {
-            $connection->error;
-        }
-    } 
+    //     if ($connection->query($sql) === TRUE) {
+    //     } else {
+    //         $connection->error;
+    //     }
+    // } 
 } 
 ?>
 
@@ -119,7 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <?php
                   require_once('db_connector.php');
 
-                  $sql = "SELECT * FROM note_tbl WHERE note_status = 'New' OR note_status = 'Favorite'";
+                  if (isset($_POST['query'])){
+                    $search = $_POST["query"];
+                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'New' OR note_status = 'Favorite') AND (note_name LIKE '%$search%')";
+                  } else {
+                    $sql = "SELECT * FROM note_tbl WHERE note_status = 'New' OR note_status = 'Favorite'";
+                  }
                   $result = $connection->query($sql);
 
                   if(!$result){
@@ -148,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $name = "Remove Favorite"; 
                       }
                       echo "
-                      <div class = 'newNote'>
+                      <div class = 'newNote' id = 'newNote'>
                         <h2 class='noteName'>$row[note_name]</h2>
                         <div class='imgCont'>
                           <img class='dotsImg' width='20' height='20'src='images/dots.PNG'>
@@ -183,47 +188,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     let container = document.getElementById("popupForm");
      
-    const searchInput = document.getElementById('searchName');
-    const searchResults = document.getElementById('searchResults');
+    document.getElementById('searchNotes').addEventListener('input', function() {
+      search(this.value);
+    });
 
-    function favToggle(id){
-
-      let listDisplay = document.getElementById("listFav");
-
-      let status = "";
-      let altValue = "";
-
-      if (event.target.classList.contains("favNote")) {
-            altValue = event.target.getAttribute("alt");
-      }
-
-      console.log(altValue);
-
-      if(altValue.includes("New")){
-        status = "Favorite";
-      }else{
-        status = "New";
-      }
+    function search(query) {
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", "", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+      xhr.open('POST', '', true); // Provide the correct URL of search.php
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-          console.log('Request successful');
-          location.reload();
-        } else {
-          console.error('There was a problem with the request.');
-          }
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          updateNotes(xhr.responseText);
         }
       };
+      xhr.send('query=' + query);
+    }
 
-      xhr.onerror = function() {
-        console.error('Error occurred during request.');
-      };
-      
-      xhr.send("noteIdStat="+id+"&&status="+status);
+    function updateNotes(responseText) {
+      // Parse the responseText as HTML
+      const parser = new DOMParser();
+      const newNotes = parser.parseFromString(responseText, 'text/html').body.querySelectorAll('.newNote');
+
+      // Get the target container
+      const container = document.getElementById('addedNoteContainer');
+
+      // Remove existing notes from the container
+      container.innerHTML = '';
+
+      // Append new notes to the container
+      newNotes.forEach(function(newNote) {
+          container.appendChild(newNote);
+      });
     }
 
     function resetForm() {
@@ -293,69 +288,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           menuList.style.display = menuList.style.display === 'block' ? 'none' : 'block';
         });
       });
-
-      var themeToggle = true;
-
-      pickBtn.addEventListener("click", function(){
-        themeColorContainer.style.display = "block";
-        if(themeToggle){
-          themeColorContainer.style.display = "block";
-          themeToggle = false;
-        }else{
-          themeColorContainer.style.display = "none";
-          themeToggle = true;
-        }
-      });
-      
-      addBtn.addEventListener("click", function() {
-        let id = document.getElementById("idDisplay").value;
-        let operation = document.getElementById("operation").value;
-        let name = document.getElementById("notesName").value;
-        let message = document.getElementById("noteMsgOut").textContent;
-        let color = document.getElementById("themePick").value;
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-              console.log('Request successful');
-              location.reload();
-          } else {
-              console.error('There was a problem with the request.');
-            }
-          }
-        };
-
-        xhr.onerror = function() {
-            console.error('Error occurred during request.');
-        };
-
-        if(operation.includes("Add")){
-          xhr.send("name="+name+"&&message="+message+"&&color="+color+"&&operation="+operation);
-        console.log(operation);
-        }else if(operation.includes("Edit")){
-          xhr.send("name="+name+"&&message="+message+"&&color="+color+"&&id="+id+"&&operation="+operation);
-        console.log(operation);
-        }
-
-      });
-
-        var noteForm = document.getElementById("popupForm");
-        var btn = document.getElementById("addNotesBtn");
-        var formTitle = document.getElementById("titleForm");
-
-        btn.addEventListener("click", function() {
-          formTitle.textContent = "ADD NOTES";
-          noteForm.style.display = "block";
-          operation.value = "Add";
-        });
-
-        cnlBtn.addEventListener("click", function() {
-          noteForm.style.display = "none";
-        });
     });
 
     let noteForm = document.getElementById("popupForm");
