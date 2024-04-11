@@ -18,11 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
           $connection->error;
         }
-       
     }
           
-    
-    
 
     if (isset($_POST["addNotes"])) {
     
@@ -60,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/newmaindash.css">
+    <link rel="stylesheet" href="styles/mynewcssdashboard.css">
     <title>Document</title>
 </head>
 <body>
@@ -84,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <div class="topBar">
               <div class="titleNotes">
                   <h1 class="allNotes">All Notes</h1>
-                  <div class="line"></div>
               </div>
               <div class="searchNav">
                   <input id="searchNotes" type="text" placeholder="Search" name = "searchName">

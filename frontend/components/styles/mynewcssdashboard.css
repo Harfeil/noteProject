@@ -4,21 +4,24 @@ body {
     rgba(238, 174, 202, 1) 0%,
     rgba(148, 187, 233, 1) 100%
   );
+  overflow: hidden;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 .dashboardContainer {
   display: flex;
   flex-direction: row;
-  max-height: 900px;
+  height: 894px;
+  width: calc(100% + 40px);
   overflow-x: hidden;
+  overflow-y: hidden;
   margin-top: -10px;
   margin-left: -10px;
 }
 .sidebar {
   width: 15%;
   background-color: white;
-  height: 99vh;
   font-weight: bold;
-  overflow-y: hidden;
 }
 .logo {
   font-size: 20px;
@@ -123,7 +126,7 @@ body {
   background-color: red;
 }
 .addedNoteContainer {
-  height: 813px;
+  height: 843px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 440px));
   overflow-y: auto;
@@ -166,7 +169,7 @@ body {
   margin: 0;
   cursor: default;
   position: absolute;
-  width: 240px;
+  width: 150px;
   z-index: 2;
 }
 .menu-list:hover {
