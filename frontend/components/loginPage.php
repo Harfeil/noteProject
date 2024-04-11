@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="styles/login.css">
+<link rel="stylesheet" href="styles/newlogin.css">
 
 <div class = "loginContainer">
     <div class = "loginTitle">
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input class = "nameText" type="text" name = "email" value = <?php echo $email ?>><br><br>
             <label for="" id = "emailError"><?php echo $emailError ?></label><br>
             <label for="">Password</label><br><br>
-            <input class = "passwordText"type="text" name = "password"  value = <?php echo $password ?>><br><br>
+            <input class = "passwordText"type="password" name = "password"  value = <?php echo $password ?>><br><br>
             <label for="" id = "passwordError"><?php echo $passwordError ?></label><br>
             <input id = "checkbox" type="checkbox" name = "checkme">
             <label for="">Sign Me In</label>

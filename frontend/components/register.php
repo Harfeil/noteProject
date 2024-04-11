@@ -136,7 +136,7 @@
 
 ?>
 
-<link rel="stylesheet" href="styles/register.css">
+<link rel="stylesheet" href="styles/newregister.css">
 
 <div id = "formContainer">
 
