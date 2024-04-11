@@ -2,6 +2,8 @@
 include "templates/header.php";
 require_once('db_connector.php');
 
+session_start();
+
 $emailError = "";
 $passwordError = "";
 $checkError = "";
@@ -37,14 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if($error === false) {
-        $sql = "SELECT user_password FROM users WHERE user_email = '$email'";
+        $sql = "SELECT * FROM users WHERE user_email = '$email'";
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $hashedpassword = $row["user_password"];
+            $id = $row["user_id"];
             echo $password;
             if(password_verify($password, $row["user_password"])) {
+                $_SESSION['name'] = $id;
                 header("Location: maindash.php");
             } else {
                 $messageError = "Incorrect Password";
@@ -55,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="styles/myLogin.css">
+<link rel="stylesheet" href="styles/login.css">
 
 <div class = "loginContainer">
     <div class = "loginTitle">

@@ -122,9 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                   if (isset($_POST['query'])){
                     $search = $_POST["query"];
-                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'New' OR note_status = 'Favorite') AND (note_name LIKE '%$search%') AND user_id = '$name'";
+                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'Favorite') AND (note_name LIKE '%$search%') AND user_id = '$name'";
                   } else {
-                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'New' OR note_status = 'Favorite') AND user_id = '$name'";
+                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'Favorite') AND user_id = '$name'";
                   }
                   $result = $connection->query($sql);
 
@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
       console.log(status);
 
-      if(status === "New"){
+       if(status === "New"){
         status = "Favorite";
       }else if(status === "Favorite"){
         status = "New";

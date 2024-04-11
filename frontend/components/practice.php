@@ -171,8 +171,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               <li data-noteId = '$row[note_id]' data-name = '$row[note_name]' data-color = '$row[note_color]'
                               data-message = '$row[note_message]'
                               data-date = '$row[note_date]' class='editBtn' id = 'editBtn' onclick = 'editNotes()'>Edit</li>
-                              <li id = 'listFav' class='favNote' alt = $alt onclick = 'favToggle($row[note_id])'>$name  </li>
-                              <li>Archive</li>
+                              <li id = 'listFav' class='favNote' onclick = 'favToggle($row[note_id])'>$name  </li>
+                              <li >Archive</li>
                               <li>Delete Permanent</li>
                           </ul>
                         </div>

@@ -111,16 +111,24 @@
 
         if($error === false){
 
-            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (user_fname, user_lname, user_age, user_gender, user_email, user_password) VALUES ('$fname' , '$lname','$age', '$gender ', '$email', '$hashedpassword')";
-            $result = $connection->query($sql);
-             $fname = "";
-            $lname = "";
-            $age = "";
-            $gender = "";
-            $email = "";
-            $password = "";
-            $cpassword = "";
+            $sqlSelect = "SELECT * FROM users WHERE user_email = '$email'";
+                  
+            $resultSelect = $connection->query($sqlSelect);
+
+            if ($resultSelect->num_rows > 0){
+                $errorEmail = "Email is already exist.<br>";
+            }else{
+                $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO users (user_fname, user_lname, user_age, user_gender, user_email, user_password) VALUES ('$fname' , '$lname','$age', '$gender ', '$email', '$hashedpassword')";
+                $result = $connection->query($sql);
+                $fname = "";
+                $lname = "";
+                $age = "";
+                $gender = "";
+                $email = "";
+                $password = "";
+                $cpassword = "";
+            }
         }
 
 
@@ -128,36 +136,42 @@
 
 ?>
 
-<link rel="stylesheet" href="styles/myRegister.css">
+<link rel="stylesheet" href="styles/register.css">
 
 <div id = "formContainer">
 
     <form action="" method = "POST">
-
-        <label for="">First Name:</label><br>
-        <input type="text" id = "nameInput" name = "fname" value = <?php echo $fname ?>><br>
-        <label for="" id = "fnameError"><?php echo $errorFname ?></label><br>
-        <label for="">Last Name:</label><br>
-        <input type="text" id = "lastName" name = "lname" value = <?php echo $lname ?>><br>
-        <label for="" id = "lnameError"><?php echo $errorLname ?></label><br>
-        <label for="">Age:</label><br>
-        <input type="text" id = "ageInput" name = "age" value = <?php echo $age ?>><br>
-        <label for="" id = "ageError"><?php echo $errorAge ?></label><br><br>
-        <label for="">Gender:</label><br>
-        <input type="radio" name = "Gender" value = "Male">
-        <label for="" >Male:</label>
-        <input type="radio" name = "Gender" value = "Female">
-        <label for="" >Female:</label><br>
-        <label for="" id = "genderError"><?php echo $errorGender ?></label><br>
-        <label for="">Email:</label><br>
-        <input type="text"id = "emailInput" name = "email" value = <?php echo $email ?>><br>
-        <label for="" id = "emailError"><?php echo $errorEmail ?></label><br>
-        <label for="">Password:</label><br>
-        <input type="text"id = "passwordInput" name = "password" value = <?php echo $password ?>><br>
-        <label for="" id = "passwordError"><?php echo $errorPass ?></label><br>
-        <label for="">Confirm Password:</label><br>
-        <input type="text"id = "confirmpasswordInput" name = "cpassword" value = <?php echo $cpassword ?>><br>
-        <label for="" id = "cpasswordError"><?php echo $errorCpass ?></label><br>
+        <h3>REGISTRATION FORM</h3><br>
+        <div class = "mainDiv">
+            <div class = "leftContainer">
+                <label for="">First Name:</label><br>
+                <input type="text" id = "nameInput" name = "fname" value = <?php echo $fname ?>><br>
+                <label for="" id = "fnameError"><?php echo $errorFname ?></label><br>
+                 <label for="">Age:</label><br>
+                <input type="text" id = "ageInput" name = "age" value = <?php echo $age ?>><br>
+                <label for="" id = "ageError"><?php echo $errorAge ?></label><br>
+                 <label for="">Email:</label><br>
+                <input type="text"id = "emailInput" name = "email" value = <?php echo $email ?>><br>
+                <label for="" id = "emailError"><?php echo $errorEmail ?></label><br>
+                <label for="">Password:</label><br>
+                <input type="text"id = "passwordInput" name = "password" value = <?php echo $password ?>><br>
+                <label for="" id = "passwordError"><?php echo $errorPass ?></label><br>
+            </div>
+            <div class = "rightContainer">
+                <label for="">Last Name:</label><br>
+                <input type="text" id = "lastName" name = "lname" value = <?php echo $lname ?>><br>
+                <label for="" id = "lnameError"><?php echo $errorLname ?></label><br>
+                <label for="">Gender:</label><br>
+                <input type="radio" name = "Gender" value = "Male">
+                <label for="" >Male:</label>
+                <input type="radio" name = "Gender" value = "Female">
+                <label for="" >Female:</label><br>
+                <label for="" id = "genderError"><?php echo $errorGender ?></label><br><br><br><br><br>
+                <label for="">Confirm Password:</label><br>
+                <input type="text"id = "confirmpasswordInput" name = "cpassword" value = <?php echo $cpassword ?>><br>
+                <label for="" id = "cpasswordError"><?php echo $errorCpass ?></label><br>
+            </div>
+        </div>
         <button id="button">Submit</button>
 
     </form>

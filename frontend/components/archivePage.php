@@ -119,12 +119,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   $name = $_SESSION["name"];
                   $listDisplay = "Archive";
                   $deleteDisplay = "";
+                  $editName = "";
 
                   if (isset($_POST['query'])){
                     $search = $_POST["query"];
-                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'New' OR note_status = 'Favorite') AND (note_name LIKE '%$search%') AND user_id = '$name'";
+                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'Archived') AND (note_name LIKE '%$search%') AND user_id = '$name'";
                   } else {
-                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'New' OR note_status = 'Favorite') AND user_id = '$name'";
+                    $sql = "SELECT * FROM note_tbl WHERE (note_status = 'Archived') AND user_id = '$name'";
                   }
                   $result = $connection->query($sql);
 
@@ -142,7 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $marginLeft = "60px";
                         $trashMarginTop = "-58px";
                         $alt = "New";
-                        $name = "Add to Favorite";  
+                        $name = "Add to Favorite";
+                        $editName = "Edit";  
                       }else if($row["note_status"] === 'Favorite'){
                         $path = 'images/favorite.PNG';
                         $height = "45";
@@ -152,9 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $trashMarginTop = "-50px";
                         $alt = "Favorite";
                         $name = "Remove Favorite"; 
+                        $editName = "Edit";  
                       }else if($row["note_status"] === 'Archived'){
                         $listDisplay = "Restore";
                         $deleteDisplay = "Delete Permanent";
+                        $name = "";
                       }else{
                         $listDisplay = "Archive";
                       }
@@ -166,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <ul id = 'menu-list' class='menu-list' style='display: none;'>
                               <li data-noteId = '$row[note_id]' data-name = '$row[note_name]' 
                               data-message = '$row[note_message]'
-                              data-date = '$row[note_date]' class='editBtn' onclick = 'editNotes()' id = 'editBtn'>Edit</li>
+                              data-date = '$row[note_date]' class='editBtn' onclick = 'editNotes()' id = 'editBtn'>$editName</li>
                               <li data-status = '$row[note_status]' id = 'listFav' class='listFav' onclick = 'favToggle($row[note_id])'>$name  </li>
                               <li data-status = '$row[note_status]' id = 'listArc' class='listArc' onclick = 'archiveToggle($row[note_id])'>$listDisplay</li>
                               <li data-status = '$row[note_status]' id = 'listArc' class='listArc'>$deleteDisplay</li>
@@ -199,10 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
       console.log(status);
 
-      if(status === "New"){
-        status = "Favorite";
-      }else if(status === "Favorite"){
-        status = "New";
+      if(status !== "Archived"){
+        status = "Archived";
       }
 
       console.log(status);
