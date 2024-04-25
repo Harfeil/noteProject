@@ -20,4 +20,12 @@
         window.location.href = link;
     }
 
+    let linkBtns = document.querySelectorAll("#links");
+
+    linkBtns.forEach(function(linkBtn) {
+        linkBtn.addEventListener("click", function() {
+            linkBtn.classList.add("Active");
+        });
+    });
+
 </script>

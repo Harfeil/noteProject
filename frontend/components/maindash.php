@@ -1,9 +1,10 @@
+
+
 <?php
 require_once('db_connector.php');
 
 session_start();
-
-
+// Check if the user is logged in, if not then redirect to login page
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if(isset($_POST["editNotes"])){
@@ -33,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name = "Untitled Notes";
       }
 
+      if (!preg_match("/^[a-zA-Z]+$/", $name)) {
+        $name = "Untitled Notes";
+      }
+
       $sql = "INSERT INTO note_tbl (note_name, note_date, note_message, note_status, user_id) VALUES ('$name' , '$currentDate','$message', '$status', '$user_id')";
       $result = $connection->query($sql);
     }
@@ -51,27 +56,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/mynewcssdashboard.css">
+    <link rel="stylesheet" href="styles/cssnewdashboard.css">
     <title>Document</title>
 </head>
 <body>
 
+<?php
+
+   if(!isset($_SESSION["name"])) {
+      header("Location: loginpage.php");
+    }
+
+?>
 <div class="dashboardContainer">
     <div class="sidebar">
         <div class="logo">
             <h1>Note<span id="spanLogo">It!</span></h1>
         </div>
         <div class="listContainer">
-            <ul>
-                <li > <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
-                <li> <img width="18" height="18" src="images/heart.png" alt=""> <a href="favoritePage.php">Favorite</a></li>
-                <li> <img width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php">Archives</a></li>
+            <ul class = "linkList">
+                <li class = "active"> <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
+                <li > <img width="18" height="18" src="images/heart.png" alt=""> <a href="favoritePage.php">Favorite</a></li>
+                <li > <img id = "archiveImage" width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php"><div id = "archiveTxt"><p>Archives</p></div></a></li>
                 <li> <img width="18" height="18" src="images/logout.png" alt=""> <a href="index.php">Logout</a></li>
             </ul>
         </div>

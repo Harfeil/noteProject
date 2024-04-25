@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     include "templates/header.php";
     require_once('db_connector.php');
 
@@ -10,6 +12,7 @@
         $passwordError = "";
         $cPasswordError = "";
         $accError = "";
+        $status = isset($_SESSION["status"]) ? $_SESSION["status"] : "";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -70,27 +73,22 @@
         }
 
     }
-
 ?>
 <link rel="stylesheet" href="styles/forgotPass.css">
 
-<div class = "loginContainer">
-    <div class = "loginTitle">
-        <h1 id = "loginTitle">Note<span id = "spanLogo">It!</span></h1>
+
+
+<div class="loginContainer">
+    <div class="loginTitle">
+        <h1 id="loginTitle">Note<span id="spanLogo">It!</span></h1>
     </div>
-    <div class = "formContainer">
-        <form action="" method = "post">
-            <label for="">Email:</label><br>
-            <input id ="email" type="text" name = "email" value = <?php echo $email ?>><br>
-            <label for="" id = "emailError"><?php echo $emailError ?></label><br>
-            <label for="">Password:</label> <br>
-            <input name = "password" id ="password" type="password" value = <?php echo $password ?>><br>
-            <label for="" id = "passwordError"><?php echo $passwordError ?></label><br>
-            <label for="">Confirm Password:</label> <br>
-            <input id ="confirmInput" name = "cPassword" type="password" value = <?php echo $cPassword ?>><br>
-            <label for="" id = "cPassError"><?php echo $cPasswordError ?></label><br>
-            <button id = "submit">Submit</button><br>
-            <label for="" id = "accError"><?php echo $accError ?></label><br>
+    <div class="formContainer">
+        <form action="reset_password.php" method="post">
+            <label for="email">Email:</label><br>
+            <input id="email" type="text" name="email" value="<?php echo htmlspecialchars($email); ?>"><br>
+            <label for="emailError" class="error"><?php echo $emailError; ?></label><br>
+            <button id="submit" name="submit_password_btn">Submit</button><br>
+            <label for="status" class="status"><?php echo $status; ?></label><br>
         </form>
     </div>
 </div>

@@ -2,8 +2,6 @@
 require_once('db_connector.php');
 
 session_start();
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if(isset($_POST["editNotes"])){
@@ -20,9 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
        
     }
-          
-    
-    
 
     if (isset($_POST["addNotes"])) {
     
@@ -60,8 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/mynewcssdashboard.css">
+    <link rel="stylesheet" href="styles/dashnewboard.css">
     <title>Document</title>
+    <?php
+      if(!isset($_SESSION['name'])) {
+        header("Location: loginPage.php");
+        exit();
+      }
+     ?>
 </head>
 <body>
 
@@ -71,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h1>Note<span id="spanLogo">It!</span></h1>
         </div>
         <div class="listContainer">
-            <ul>
-                <li > <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
-                <li> <img width="18" height="18" src="images/heart.png" alt=""> <a href="favoritePage.php">Favorite</a></li>
-                <li> <img width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php">Archives</a></li>
+            <ul class = "linkList">
+                <li> <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
+                <li class = "active"> <img width="18" height="18" src="images/heart.png" alt=""> <a href="favoritePage.php">Favorite</a></li>
+                <li > <img id = "archiveImage" width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php"><div id = "archiveTxt"><p>Archives</p></div></a></li>
                 <li> <img width="18" height="18" src="images/logout.png" alt=""> <a href="index.php">Logout</a></li>
             </ul>
         </div>
@@ -83,15 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="notesContainer" id = "notesContainer">
           <div class="topBar">
               <div class="titleNotes">
-                  <h1 class="allNotes">All Notes</h1>
-                  <div class="line"></div>
+                  <h1 class="allNotes">Favorite Notes</h1>
               </div>
               <div class="searchNav">
                   <input id="searchNotes" type="text" placeholder="Search" name = "searchName">
-              </div>
-              <div class="addBtn">
-                  <button id="addNotesBtn">+</button>
-                  <label for="" id = "addNtsLbl">Add Notes</label>
               </div>
           </div>
             <div id="popupForm" class="popup-form">

@@ -2,7 +2,10 @@
 require_once('db_connector.php');
 
 session_start();
-
+if(!isset($_SESSION['name'])) {
+    header("Location: loginPage.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -20,9 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
        
     }
-          
-    
-    
 
     if (isset($_POST["addNotes"])) {
     
@@ -52,6 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $connection->error;
       }
     }
+     if (isset($_POST["action"]) && isset($_POST["noteId"])) {
+
+      $id = $_POST["noteId"];
+
+       $sql = "DELETE FROM note_tbl WHERE note_id = $id";
+
+        if ($connection->query($sql) === TRUE) {
+            echo "Record deleted successfully";
+        } else {
+            echo "Error deleting record: " . $connection->error;
+        }
+     }
 } 
 ?>
 
@@ -60,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/mynewcssdashboard.css">
+    <link rel="stylesheet" href="styles/dashnewboard.css">
     <title>Document</title>
 </head>
 <body>
@@ -71,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h1>Note<span id="spanLogo">It!</span></h1>
         </div>
         <div class="listContainer">
-            <ul>
-                <li > <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
+            <ul class = "linkList">
+                <li> <img width="18" height="18" src="images/notes.png" alt=""> <a href="maindash.php">All Notes</a></li>
                 <li> <img width="18" height="18" src="images/heart.png" alt=""> <a href="favoritePage.php">Favorite</a></li>
-                <li> <img width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php">Archives</a></li>
+                <li class = "active"> <img id = "archiveImage" width="18" height="23" src="images/archive.png" alt=""> <a href="archivePage.php"><div id = "archiveTxt"><p>Archives</p></div></a></li>
                 <li> <img width="18" height="18" src="images/logout.png" alt=""> <a href="index.php">Logout</a></li>
             </ul>
         </div>
@@ -83,15 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="notesContainer" id = "notesContainer">
           <div class="topBar">
               <div class="titleNotes">
-                  <h1 class="allNotes">All Notes</h1>
-                  <div class="line"></div>
+                  <h1 class="allNotes">Archive Notes</h1>
               </div>
               <div class="searchNav">
                   <input id="searchNotes" type="text" placeholder="Search" name = "searchName">
-              </div>
-              <div class="addBtn">
-                  <button id="addNotesBtn">+</button>
-                  <label for="" id = "addNtsLbl">Add Notes</label>
               </div>
           </div>
             <div id="popupForm" class="popup-form">
@@ -173,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               data-date = '$row[note_date]' class='editBtn' onclick = 'editNotes()' id = 'editBtn'>$editName</li>
                               <li data-status = '$row[note_status]' id = 'listFav' class='listFav' onclick = 'favToggle($row[note_id])'>$name  </li>
                               <li data-status = '$row[note_status]' id = 'listArc' class='listArc' onclick = 'archiveToggle($row[note_id])'>$listDisplay</li>
-                              <li data-status = '$row[note_status]' id = 'listArc' class='listArc'>$deleteDisplay</li>
+                              <li data-id = '$row[note_status]' id = 'listDel' class='listDel' onclick = 'deleteMe($row[note_id])'>$deleteDisplay</li>
                           </ul>
                         </div>
                         <div class = 'messageContainer' id = 'messageContainer' >
@@ -194,21 +201,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <script>
 
-    function favToggle(id){
-
-      let listDisplay = document.getElementById("listFav");
-
-      if (event.target.classList.contains("listFav")) {
-        status = event.target.getAttribute('data-status');
-      }
-      console.log(status);
-
-      if(status !== "Archived"){
-        status = "Archived";
-      }
-
-      console.log(status);
-
+    function deleteMe(id){
+      
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -228,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         console.error('Error occurred during request.');
       };
       
-      xhr.send("noteIdStat="+id+"&&status="+status);
+      xhr.send("action=delete&&noteId="+id);
     }
 
     function archiveToggle(id){
@@ -342,14 +336,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     let noteForm = document.getElementById("popupForm");
-    let btn = document.getElementById("addNotesBtn");
     let formTitle = document.getElementById("titleForm");
     
-    btn.addEventListener("click", function(){
-      formTitle.textContent = "ADD NOTES";
-      noteForm.style.display = "Block";
-    });
-
     cnlBtn.addEventListener("click", function(){
       noteForm.style.display = "none";
     });

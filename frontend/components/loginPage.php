@@ -4,6 +4,7 @@ require_once('db_connector.php');
 
 session_start();
 
+
 $emailError = "";
 $passwordError = "";
 $checkError = "";
@@ -59,7 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="styles/newlogin.css">
+<link rel="stylesheet" href="styles/lognew.css">
+
+<?php
+
+    if(isset($_SESSION["name"])) {
+      header("Location: mainDash.php");
+    }
+
+?>
 
 <div class = "loginContainer">
     <div class = "loginTitle">
@@ -67,11 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <div class = "formContainer">
         <form action="" method = "post">
-            <label for="">Email:</label><br><br>
-            <input class = "nameText" type="text" name = "email" value = <?php echo $email ?>><br><br>
+            <label for="">Email:</label><br>
+            <input class = "nameText" type="text" name = "email" placeholder = "Enter your Email" value = <?php echo $email ?>><br>
             <label for="" id = "emailError"><?php echo $emailError ?></label><br>
-            <label for="">Password</label><br><br>
-            <input class = "passwordText"type="password" name = "password"  value = <?php echo $password ?>><br><br>
+            <label for="">Password:</label><br>
+            <input class = "passwordText"type="password" name = "password" placeholder = "Enter Password" value = <?php echo $password ?>><br>
             <label for="" id = "passwordError"><?php echo $passwordError ?></label><br>
             <input id = "checkbox" type="checkbox" name = "checkme">
             <label for="">Sign Me In</label>

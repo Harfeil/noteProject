@@ -136,40 +136,49 @@
 
 ?>
 
-<link rel="stylesheet" href="styles/newregister.css">
+<link rel="stylesheet" href="styles/regisnew.css">
+<?php
+    if(isset($_SESSION["name"])) {
+      header("Location: mainDash.php");
+    }
 
+?>
 <div id = "formContainer">
 
+    <h2>Registration Form</h2><br>
     <form action="" method = "POST">
-        <h3>REGISTRATION FORM</h3><br>
         <div class = "mainDiv">
             <div class = "leftContainer">
-                <label for="">First Name:</label><br>
-                <input type="text" id = "nameInput" name = "fname" value = <?php echo $fname ?>><br>
+                <label for="">First Name:<span>*</span> </label><br>
+                <input type="text" id = "nameInput" name = "fname"  placeholder = "Enter your First Name" value = <?php echo $fname ?> ><br>
                 <label for="" id = "fnameError"><?php echo $errorFname ?></label><br>
-                 <label for="">Age:</label><br>
-                <input type="text" id = "ageInput" name = "age" value = <?php echo $age ?>><br>
-                <label for="" id = "ageError"><?php echo $errorAge ?></label><br>
-                 <label for="">Email:</label><br>
-                <input type="text"id = "emailInput" name = "email" value = <?php echo $email ?>><br>
-                <label for="" id = "emailError"><?php echo $errorEmail ?></label><br>
-                <label for="">Password:</label><br>
-                <input type="text"id = "passwordInput" name = "password" value = <?php echo $password ?>><br>
+                <div class="genderContainer">
+                    <label for="">Age:<span>*</span></label>
+                    <input type="number" id = "ageInput" name = "age" Placeholder = "Enter Age" value = <?php echo $age ?>>
+                    <label for="">Gender:<span>*</span></label>
+                    <select name="Gender" id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <label for="" id = "ageError"><?php echo $errorAge ?></label>
+                <label for="" id = "genderError"><?php echo $errorGender ?></label><br>
+                <label for="">Password:<span>*</span></label><br>
+                <input type="text"id = "passwordInput" name = "password" placeholder = "Enter your Password" value = <?php echo $password ?>><br>
                 <label for="" id = "passwordError"><?php echo $errorPass ?></label><br>
             </div>
             <div class = "rightContainer">
-                <label for="">Last Name:</label><br>
-                <input type="text" id = "lastName" name = "lname" value = <?php echo $lname ?>><br>
+                <label for="">Last Name:<span>*</span></label><br>
+                <input type="text" id = "lastName" name = "lname" placeholder = "Enter your Last Name" value = <?php echo $lname ?>><br>
                 <label for="" id = "lnameError"><?php echo $errorLname ?></label><br>
-                <label for="">Gender:</label><br>
-                <input type="radio" name = "Gender" value = "Male">
-                <label for="" >Male:</label>
-                <input type="radio" name = "Gender" value = "Female">
-                <label for="" >Female:</label><br>
-                <label for="" id = "genderError"><?php echo $errorGender ?></label><br><br><br><br><br>
-                <label for="">Confirm Password:</label><br>
-                <input type="text"id = "confirmpasswordInput" name = "cpassword" value = <?php echo $cpassword ?>><br>
-                <label for="" id = "cpasswordError"><?php echo $errorCpass ?></label><br>
+                 <label for="">Email:<span>*</span></label><br>
+                <input type="text"id = "emailInput" name = "email" placeholder = "Enter your Email"value = <?php echo $email ?>><br>
+                <label for="" id = "emailError"><?php echo $errorEmail ?></label><br>
+                <div class="cpassContainer">
+                    <label for="" id = "cPassLbl">Confirm Password:<span>*</span></label><br>
+                    <input type="text"id = "confirmpasswordInput" name = "cpassword" placeholder = "Re-Enter your Password" value = <?php echo $cpassword ?>><br>
+                    <label for="" id = "cpasswordError"><?php echo $errorCpass ?></label><br>
+                </div>
             </div>
         </div>
         <button id="button">Submit</button>
